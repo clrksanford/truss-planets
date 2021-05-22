@@ -6,6 +6,11 @@
 
 <script>
 export default {
-  name: 'PlanetTable'
+  name: 'PlanetTable',
+  created() {
+    this.$planetService.getPlanets().then(response => {
+      console.log(response);
+    });
+  }
 }
 </script>
