@@ -85,3 +85,14 @@ export default {
   }
 }
 </script>
+
+<style>
+table {
+  border-collapse: collapse;
+  border: 1px solid gray;
+}
+th, td {
+  border: 1px solid gray;
+  padding: 5px;
+}
+</style>
