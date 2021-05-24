@@ -5,6 +5,9 @@
     <div v-if="loading">
       <p>Loading planet data...</p>
     </div>
+    <div v-else-if="error">
+      <p>{{ error }}</p>
+    </div>
     <div v-else>
       <table>
         <thead>
@@ -43,6 +46,7 @@ export default {
   name: 'PlanetTable',
   data() {
     return {
+      error: '',
       loading: false,
       planets: []
     };
@@ -71,6 +75,9 @@ export default {
             waterArea: this.calculateWaterArea(planet)
           }
         });
+      }).catch(error => {
+          this.loading = false;
+          this.error = error;
       });
     },
     calculateWaterArea(planet) {
