@@ -12,19 +12,23 @@
             <th>Name</th>
             <th>Climate</th>
             <th># Residents</th>
-            <th>Terrain</th>
+            <th>Terrain(s)</th>
             <th>Population</th>
-            <th>Surface Area Covered by Water</th>
+            <th>Surface Area Covered by Water (km<sup>2</sup>)</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="planet of planets" :key="planet.id">
-            <td>{{ planet.name }}</td>
-            <td>{{ planet.climate }}</td>
-            <td>{{ planet.residents.length }}</td>
-            <td>{{ planet.terrain }}</td>
-            <td>{{ planet.population }}</td>
-            <td>?</td>
+            <td>
+              <a :href="planet.url" target="_blank" rel="noopener noreferrer">
+                {{ formatUnknownValues(planet.name) }}
+              </a>
+            </td>
+            <td>{{ formatUnknownValues(planet.climate) }}</td>
+            <td>{{ planet.numResidents }}</td>
+            <td>{{ formatUnknownValues(planet.terrain) }}</td>
+            <td>{{ formatUnknownValues(planet.population) }}</td>
+            <td>{{ planet.waterArea }}</td>
           </tr>
         </tbody>
       </table>
@@ -33,6 +37,8 @@
 </template>
 
 <script>
+import { UNKNOWN } from '../constants';
+
 export default {
   name: 'PlanetTable',
   data() {
@@ -45,12 +51,30 @@ export default {
     this.getPlanets();
   },
   methods: {
+    formatUnknownValues(value) {
+      return value === UNKNOWN ? '?' : value;
+    },
     getPlanets() {
       this.loading = true;
       this.$planetService.getPlanets().then(response => {
         this.loading = false;
-        this.planets = response.data.results;
+        this.planets = response.data.results.map(planet => {
+          return {
+            ...planet,
+            numResidents: planet.residents.length,  // Check not unknown, check actually an array
+            waterArea: this.calculateWaterArea(planet)
+          }
+        });
       });
+    },
+    calculateWaterArea(planet) {
+      if (!this.isNum(planet.diameter) || !this.isNum(planet.surface_water)) {
+        return '?';
+      }
+      return Math.round(4 * Math.PI * Math.pow(planet.diameter/2, 2) * (planet.surface_water/100));
+    },
+    isNum(val) {
+      return /^\d+$/.test(val);
     }
   }
 }
