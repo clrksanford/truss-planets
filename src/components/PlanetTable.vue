@@ -62,7 +62,7 @@ export default {
       if (!this.isNum(value) || parseInt(value) <= 999) {
         return value;
       }
-      return new Intl.NumberFormat().format(value).replace(/,/g, ' ');
+      return new Intl.NumberFormat('en-US').format(value).replace(/,/g, ' ');
     },
     getPlanets() {
       this.loading = true;
