@@ -25,10 +25,10 @@
               </a>
             </td>
             <td>{{ formatUnknownValues(planet.climate) }}</td>
-            <td>{{ planet.numResidents }}</td>
+            <td>{{ formatNumericValue(planet.numResidents) }}</td>
             <td>{{ formatUnknownValues(planet.terrain) }}</td>
-            <td>{{ formatUnknownValues(planet.population) }}</td>
-            <td>{{ planet.waterArea }}</td>
+            <td>{{ formatNumericValue(formatUnknownValues(planet.population)) }}</td>
+            <td>{{ formatNumericValue(planet.waterArea) }}</td>
           </tr>
         </tbody>
       </table>
@@ -53,6 +53,12 @@ export default {
   methods: {
     formatUnknownValues(value) {
       return value === UNKNOWN ? '?' : value;
+    },
+    formatNumericValue(value) {
+      if (!this.isNum(value) || parseInt(value) <= 999) {
+        return value;
+      }
+      return new Intl.NumberFormat().format(value).replace(/,/g, ' ');
     },
     getPlanets() {
       this.loading = true;
