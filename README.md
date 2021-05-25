@@ -1,14 +1,17 @@
 # planets
 
-## Project setup
+## Local Development
+
+To begin working on this project, checkout the code, cd into the top-level directory, and run
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+followed by
 ```
 npm run serve
 ```
+Your terminal should tell you the URL where your site is being served (likely http://localhost:8080).
+
 
 ### Compiles and minifies for production
 ```
@@ -19,6 +22,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
