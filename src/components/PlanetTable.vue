@@ -71,7 +71,7 @@ export default {
         this.planets = response.data.results.map(planet => {
           return {
             ...planet,
-            numResidents: planet.residents.length,  // Check not unknown, check actually an array
+            numResidents: planet.residents ? planet.residents.length : '?',
             waterArea: this.calculateWaterArea(planet)
           }
         });
