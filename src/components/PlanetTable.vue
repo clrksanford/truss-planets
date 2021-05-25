@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Planet Info</h1>
+    <h1>Star Wars Planet Info</h1>
 
     <div v-if="loading">
       <p>Loading planet data...</p>
