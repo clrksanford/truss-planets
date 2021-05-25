@@ -1,1 +1,1 @@
-export const UNKNOWN = 'unknown';
+export const UNKNOWN_VALS = ['unknown'];

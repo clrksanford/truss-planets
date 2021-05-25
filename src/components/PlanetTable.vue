@@ -41,7 +41,7 @@
 
 <script>
 import { isNum } from '../utils/math';
-import { UNKNOWN } from '../constants';
+import { UNKNOWN_VALS } from '../constants';
 
 export default {
   name: 'PlanetTable',
@@ -56,14 +56,14 @@ export default {
     this.getPlanets();
   },
   methods: {
-    formatUnknownValues(value) {
-      return value === UNKNOWN ? '?' : value;
-    },
     formatNumericValue(value) {
       if (!isNum(value) || parseInt(value) <= 999) {
         return value;
       }
       return new Intl.NumberFormat('en-US').format(value).replace(/,/g, ' ');
+    },
+    formatUnknownValues(value) {
+      return UNKNOWN_VALS.indexOf(value) > -1 ? '?' : value;
     },
     getPlanets() {
       this.loading = true;
