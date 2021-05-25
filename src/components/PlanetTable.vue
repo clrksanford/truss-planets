@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { calcSphereSurfaceArea, isNum } from '../utils/math';
+import { isNum } from '../utils/math';
 import { UNKNOWN } from '../constants';
 
 export default {
@@ -69,26 +69,12 @@ export default {
       this.loading = true;
       this.$planetService.getPlanets().then(response => {
         this.loading = false;
-        this.planets = response.data.results.map(planet => {
-          return {
-            ...planet,
-            numResidents: planet.residents ? planet.residents.length : '?',
-            waterArea: this.calculateWaterArea(planet)
-          }
-        }).sort((planet1, planet2) =>  planet1.name > planet2.name ? 1 : -1);
+        this.planets = this.$planetService.transformResults(response.data.results);
       }).catch(error => {
         this.loading = false;
         this.error = true;
         console.error(error);
       });
-    },
-    calculateWaterArea(planet) {
-      if (!isNum(planet.diameter) || !isNum(planet.surface_water)) {
-        return '?';
-      }
-      return Math.round(
-          calcSphereSurfaceArea(planet.diameter / 2) * (planet.surface_water / 100)
-      );
     }
   }
 }
