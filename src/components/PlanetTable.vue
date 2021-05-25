@@ -74,7 +74,7 @@ export default {
             numResidents: planet.residents ? planet.residents.length : '?',
             waterArea: this.calculateWaterArea(planet)
           }
-        });
+        }).sort((planet1, planet2) =>  planet1.name > planet2.name ? 1 : -1);
       }).catch(error => {
           this.loading = false;
           console.error(error);
