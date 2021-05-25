@@ -1,4 +1,6 @@
-# planets
+# Star Wars Planets
+
+Welcome to my Star Wars Planet site!
 
 ## Local Development
 
@@ -13,12 +15,14 @@ npm run serve
 Your terminal should tell you the URL where your site is being served (likely http://localhost:8080).
 
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Linting and Deploying
 
-### Lints and fixes files
+You can run the following command to check your code for lint errors:
 ```
 npm run lint
+```
+
+When you are ready to build and deploy, simply run:
+```
+npm run build
 ```
