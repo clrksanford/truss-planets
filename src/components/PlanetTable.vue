@@ -14,7 +14,7 @@
           <tr>
             <th>Name</th>
             <th>Climate</th>
-            <th># Residents</th>
+            <th>Number of Residents</th>
             <th>Terrain(s)</th>
             <th>Population</th>
             <th>Surface Area Covered by Water (km<sup>2</sup>)</th>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { calcSphereSurfaceArea, isNum } from '../utils/math';
 import { UNKNOWN } from '../constants';
 
 export default {
@@ -59,7 +60,7 @@ export default {
       return value === UNKNOWN ? '?' : value;
     },
     formatNumericValue(value) {
-      if (!this.isNum(value) || parseInt(value) <= 999) {
+      if (!isNum(value) || parseInt(value) <= 999) {
         return value;
       }
       return new Intl.NumberFormat('en-US').format(value).replace(/,/g, ' ');
@@ -76,19 +77,18 @@ export default {
           }
         }).sort((planet1, planet2) =>  planet1.name > planet2.name ? 1 : -1);
       }).catch(error => {
-          this.loading = false;
-          console.error(error);
-          this.error = true;
+        this.loading = false;
+        this.error = true;
+        console.error(error);
       });
     },
     calculateWaterArea(planet) {
-      if (!this.isNum(planet.diameter) || !this.isNum(planet.surface_water)) {
+      if (!isNum(planet.diameter) || !isNum(planet.surface_water)) {
         return '?';
       }
-      return Math.round(4 * Math.PI * Math.pow(planet.diameter/2, 2) * (planet.surface_water/100));
-    },
-    isNum(val) {
-      return /^\d+$/.test(val);
+      return Math.round(
+          calcSphereSurfaceArea(planet.diameter / 2) * (planet.surface_water / 100)
+      );
     }
   }
 }
