@@ -10,7 +10,7 @@ npm install
 ```
 followed by
 ```
-npm run serve
+npm run start
 ```
 Your terminal should tell you the URL where your site is being served (likely http://localhost:8080).
 
