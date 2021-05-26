@@ -10,6 +10,7 @@
     </div>
     <div v-else>
       <table>
+        <caption>Info about the various planets from the Star Wars series.</caption>
         <thead>
           <tr>
             <th>Name</th>
