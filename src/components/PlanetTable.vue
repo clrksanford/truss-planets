@@ -25,14 +25,14 @@
           <tr v-for="planet of planets" :key="planet.id">
             <td>
               <a :href="planet.url" target="_blank" rel="noopener noreferrer">
-                {{ formatUnknownValues(planet.name) }}
+                {{ $filters.formatUnknownValue(planet.name) }}
               </a>
             </td>
-            <td>{{ formatUnknownValues(planet.climate) }}</td>
-            <td>{{ formatNumericValue(planet.numResidents) }}</td>
-            <td>{{ formatUnknownValues(planet.terrain) }}</td>
-            <td>{{ formatNumericValue(formatUnknownValues(planet.population)) }}</td>
-            <td>{{ formatNumericValue(planet.waterArea) }}</td>
+            <td>{{ $filters.formatUnknownValue(planet.climate) }}</td>
+            <td>{{ $filters.formatNumericValue(planet.numResidents) }}</td>
+            <td>{{ $filters.formatUnknownValue(planet.terrain) }}</td>
+            <td>{{ $filters.formatNumericValue($filters.formatUnknownValue(planet.population)) }}</td>
+            <td>{{ $filters.formatNumericValue(planet.waterArea) }}</td>
           </tr>
         </tbody>
       </table>
@@ -41,9 +41,6 @@
 </template>
 
 <script>
-import { isNum } from '../utils/math';
-import { UNKNOWN_VALS } from '../constants';
-
 export default {
   name: 'PlanetTable',
   data() {
@@ -57,15 +54,6 @@ export default {
     this.getPlanets();
   },
   methods: {
-    formatNumericValue(value) {
-      if (!isNum(value) || parseInt(value) <= 999) {
-        return value;
-      }
-      return new Intl.NumberFormat('en-US').format(value).replace(/,/g, ' ');
-    },
-    formatUnknownValues(value) {
-      return UNKNOWN_VALS.indexOf(value) > -1 ? '?' : value;
-    },
     getPlanets() {
       this.loading = true;
       this.$planetService.getPlanets().then(response => {
